@@ -15,22 +15,22 @@ import java.lang.reflect.Modifier;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 
 public class RouteProcessor {
     public static List<String> registeredRoutes = new ArrayList<>();
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public static void registerRoutes(@NotNull PageProvider provider, BaseWebServer webServer) {
+    public static void registerRoutes(Supplier<? extends PageProvider> provider, BaseWebServer webServer) {
         registerRoutes(provider, webServer, false);
     }
 
-    public static void registerRoutes(@NotNull PageProvider provider, BaseWebServer webServer, boolean accessPrivateMethods) {
-        Method[] methods = provider.getClass().getDeclaredMethods();
+    public static void registerRoutes(@NotNull Supplier<? extends PageProvider> provider, BaseWebServer webServer, boolean accessPrivateMethods) {
+        Method[] methods = provider.get().getClass().getDeclaredMethods();
         for (Method method : methods) {
-            if (accessPrivateMethods) {
-                method.setAccessible(true);
-            }
+            if (accessPrivateMethods) method.setAccessible(true);
+
             if (method.isAnnotationPresent(Route.class) && (!Modifier.isPrivate(method.getModifiers()) || accessPrivateMethods)) {
                 Route route = method.getAnnotation(Route.class);
                 registeredRoutes.add(route.value());
@@ -38,7 +38,9 @@ public class RouteProcessor {
 
                 webServer.addRoute(path, exchange -> {
                     try {
-                        Object response = method.invoke(provider);
+                        // Invoke the method using the correct PageProvider instance
+                        Object instance = provider.get();
+                        Object response = method.invoke(instance);
 
                         if (response instanceof String responseBody) {
                             exchange.getResponseHeaders().add("Content-Type", "text/plain");
