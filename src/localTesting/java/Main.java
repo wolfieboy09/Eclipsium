@@ -8,8 +8,7 @@ public class Main {
     private static final BaseWebServer webServer = new BaseWebServer(8000);
 
     public static void main(String[] args) {
-        WebPages routes = new WebPages();
-        RouteProcessor.registerRoutes(routes, webServer, true);
+        RouteProcessor.registerRoutes(WebPages::new, webServer, true);
         webServer.start();
     }
 }
