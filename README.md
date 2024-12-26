@@ -38,7 +38,7 @@ Step 1:
 public class MyEndpoints implements PageProvider {
     // You can have your init whatever you want
     // But for this example, we're going to have it blank
-    public MyWebserver() {}
+    public MyEndpoints() {}
     
     // We create routes using the annotation with the endpoint we want
     @Route("/")
