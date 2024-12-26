@@ -107,12 +107,6 @@ public class MyMainClass {
 Congrats! You now just made a simple webserver!
 You can access your webserver on `localhost:8080` (or whichever port you used)
 
-
-# QnA
-## How can I have SSL?
-SSL is currently not supported
-* Will be added in another version
-
 # Requirements
 * Java 21+
 
