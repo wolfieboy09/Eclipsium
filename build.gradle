@@ -51,7 +51,10 @@ publishing {
 publishing {
     publications {
         maven(MavenPublication) {
-            // [snip]]
+            groupId = group
+            artifactId = 'eclipsium'
+            version = eclipsium_version
+            from components.java
         }
     }
 }

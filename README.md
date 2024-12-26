@@ -23,7 +23,7 @@ dependencies {
 
 Don't forget to add `eclipsium_version` to `gradle.properties`
 ```properties
-eclipsium_version=0.0.1
+eclipsium_version=0.0.2
 ```
 
 # Setting up a basic server
