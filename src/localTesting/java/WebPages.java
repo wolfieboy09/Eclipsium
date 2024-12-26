@@ -1,4 +1,3 @@
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dev.wolfieboy09.eclipsium.images.Image;
 import dev.wolfieboy09.eclipsium.routing.PageProvider;
