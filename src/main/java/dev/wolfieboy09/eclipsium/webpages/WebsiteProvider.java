@@ -1,11 +1,11 @@
 package dev.wolfieboy09.eclipsium.webpages;
 
 
-import com.mojang.logging.LogUtils;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import org.jetbrains.annotations.Contract;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -15,7 +15,7 @@ import java.util.Map;
 public abstract class WebsiteProvider {
     public static Map<String, HttpHandler> routes = new HashMap<>();
     private static HttpServer server;
-    private static final Logger LOGGER = LogUtils.getLogger();
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebsiteProvider.class);
     private final int port;
 
     public WebsiteProvider(int port) {

@@ -1,11 +1,9 @@
 package dev.wolfieboy09.eclipsium.routing;
 
 import com.google.gson.JsonObject;
-import com.mojang.logging.LogUtils;
 import dev.wolfieboy09.eclipsium.images.Image;
 import dev.wolfieboy09.eclipsium.webpages.WebsiteProvider;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -17,10 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class RouteProcessor {
     public static List<String> registeredRoutes = new ArrayList<>();
-    private static final Logger LOGGER = LogUtils.getLogger();
+    private static final Logger LOGGER = LoggerFactory.getLogger(RouteProcessor.class);
 
     public static void registerRoutes(Supplier<? extends PageProvider> provider, WebsiteProvider webServer) {
         registerRoutes(provider, webServer, false);
