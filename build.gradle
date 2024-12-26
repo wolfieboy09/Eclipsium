@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group = 'dev.wolfieboy09.eclipsium'
@@ -28,6 +29,22 @@ repositories {
     maven {
         name = "GlareMasters"
         url = 'https://repo.glaremasters.me/repository/public/'
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "cloudsmith"
+            url = "https://maven.cloudsmith.io/wolfieboy09/eclipsium/"
+            def releasesRepoUrl = "https://maven.cloudsmith.io/wolfieboy09/eclipsium/"
+            def snapshotsRepoUrl = "https://maven.cloudsmith.io/wolfieboy09/eclipsium/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username = System.getenv("USERNAME")
+                password = System.getenv("UPLOAD_TOKEN")
+            }
+        }
     }
 }
 
