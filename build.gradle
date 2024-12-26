@@ -26,10 +26,6 @@ java {
 
 repositories {
     mavenCentral()
-    maven {
-        name = "GlareMasters"
-        url = 'https://repo.glaremasters.me/repository/public/'
-    }
 }
 
 publishing {
@@ -61,14 +57,14 @@ publishing {
 
 dependencies {
     implementation group: 'org.jetbrains', name: 'annotations', version: jetbrains_annotations_version
-    implementation group: 'com.mojang', name: 'logging', version: logger_version
     implementation group: 'com.google.code.gson', name: 'gson', version: gson_version
     implementation group: 'org.slf4j', name: 'slf4j-api', version: slf4j_version
+    implementation group: "ch.qos.logback", name: "logback-classic", version: '1.5.12'
 
     localTestingImplementation sourceSets.main.output
     localTestingImplementation "org.jetbrains:annotations:${jetbrains_annotations_version}"
-    localTestingImplementation "com.mojang:logging:${logger_version}"
     localTestingImplementation "com.google.code.gson:gson:${gson_version}"
+    localTestingImplementation group: "ch.qos.logback", name: "logback-classic", version: '1.5.12'
     localTestingImplementation "org.slf4j:slf4j-api:${slf4j_version}"
 }
 
