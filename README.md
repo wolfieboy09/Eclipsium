@@ -1,6 +1,30 @@
 <h1><img src="icon.png" alt="Eclipsium Icon" width=100 height=100 /> Eclipsium</h1>
 Java HttpServer made easy™
 
+# Installation
+With Gradle Groovy, you can install Eclipsium by the following:
+
+Add the following:
+```groovy
+repositories {
+  maven {
+      name = "Eclipsium" 
+      url "https://dl.cloudsmith.io/public/wolfieboy09/eclipsium/maven/"
+  }
+}
+```
+
+Now, you can add Eclipsium by
+```groovy
+dependencies {
+  implementation "dev.wolfieboy09.eclipsium:Eclipsium:${eclipsium_version}"
+}
+```
+
+Don't forget to add `eclipsium_version` to `gradle.properties`
+```properties
+eclipsium_version=0.0.1
+```
 
 # Setting up a basic server
 Let's say you want to greet users on the main (`/`) page.
