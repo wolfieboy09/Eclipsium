@@ -41,9 +41,17 @@ publishing {
             def snapshotsRepoUrl = "https://maven.cloudsmith.io/wolfieboy09/eclipsium/"
             url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
             credentials {
-                username = System.getenv("USERNAME")
+                username = 'wolfieboy'
                 password = System.getenv("UPLOAD_TOKEN")
             }
+        }
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            // [snip]]
         }
     }
 }
