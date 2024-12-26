@@ -45,27 +45,51 @@ Step 2:
 *registering the endpoints*
 
 ```java
-public class MyWebserver {
-    // We create an instance of BaseWebServer on port 8080
-    private static final BaseWebServer webServer = new BaseWebServer(8080);
+public class MyWebserver extends WebsiteProvider {
+    public BaseWebServer(int port) {
+        super(port);
+    }
+    
+    // Optional
+    @Override
+    public void onServerStart(int port) {
+        // Do something extra when the server starts
+    }
 
-    public static void runTheServer() {
-        // We must register the endpoints BEFORE the server is started
-        // You can't add endpoints as the server is running.
-        RouteProcessor.registerRoutes(MyEndpoints::new, webServer);
-        // You can also do RouteProcessor.registerRoutes(() -> new MyEndpoints(...), webServer)
-        // If you need additional info for your endpoints
-        
-        // If you have private methods inside your class with @Route attached then you can do
-        // RouteProcessor.registerRoutes(MyEndpoints::new, webServer, true);
-        // for the server to access private methods, otherwise, they will be skipped during registration    
-        
-        // Here, we start the webserver
-        webServer.start();
+    // Optional
+    @Override
+    public void onServerStop() {
+        // Do something extra when the server stops
     }
 }
 ```
 
+Step 3:
+*Starting the server*
+
+```java
+public class MyMainClass {
+    // Create an instance of the webserver
+    // We need to add the port we want to use
+    private static MyWebserver webserver = new MyWebServer(8080);
+    public static void main(String[] args) {
+        // Register the routes
+        RouteProcessor.registerRoutes(MyEndpoints::new, webserver);
+        webserver.start();
+    }
+}
+```
+
+Congrats! You now just made a simple webserver!
+You can access your webserver on `localhost:8080` (or whichever port you used)
+
+
+# QnA
+## How can I have SSL?
+SSL is currently not supported
+
+# Requirements
+* Java 21+
 
 # Additional Notes
-If you wanted to get all routes registered, just get the variable `registeredRoutes` from `RouteProcessor`. Varable type is `List<String>`
+If you wanted to get all routes registered, just get the variable `registeredRoutes` from `RouteProcessor`. Variable type is `List<String>`
