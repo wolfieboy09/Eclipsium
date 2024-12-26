@@ -3,7 +3,7 @@ package dev.wolfieboy09.eclipsium.routing;
 import com.google.gson.JsonObject;
 import com.mojang.logging.LogUtils;
 import dev.wolfieboy09.eclipsium.images.Image;
-import dev.wolfieboy09.eclipsium.web.BaseWebServer;
+import dev.wolfieboy09.eclipsium.webpages.WebsiteProvider;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -22,11 +22,11 @@ public class RouteProcessor {
     public static List<String> registeredRoutes = new ArrayList<>();
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public static void registerRoutes(Supplier<? extends PageProvider> provider, BaseWebServer webServer) {
+    public static void registerRoutes(Supplier<? extends PageProvider> provider, WebsiteProvider webServer) {
         registerRoutes(provider, webServer, false);
     }
 
-    public static void registerRoutes(@NotNull Supplier<? extends PageProvider> provider, BaseWebServer webServer, boolean accessPrivateMethods) {
+    public static void registerRoutes(@NotNull Supplier<? extends PageProvider> provider, WebsiteProvider webServer, boolean accessPrivateMethods) {
         Method[] methods = provider.get().getClass().getDeclaredMethods();
         for (Method method : methods) {
             if (accessPrivateMethods) method.setAccessible(true);
@@ -36,9 +36,8 @@ public class RouteProcessor {
                 registeredRoutes.add(route.value());
                 String path = route.value();
 
-                webServer.addRoute(path, exchange -> {
+                webServer.addRoute(webServer.getServer(), path, exchange -> {
                     try {
-                        // Invoke the method using the correct PageProvider instance
                         Object instance = provider.get();
                         Object response = method.invoke(instance);
 
